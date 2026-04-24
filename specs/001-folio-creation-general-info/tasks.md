@@ -13,10 +13,10 @@
 
 **Purpose**: Inicialización del proyecto y estructura base. Sin estas tareas ninguna otra puede ejecutarse.
 
-- [ ] T001 Crear `build.gradle` con plugin `net.serenity-bdd.serenity-gradle-plugin:4.2.34`, dependencias fijadas por constitución (serenity-core, serenity-cucumber, serenity-screenplay, serenity-screenplay-webdriver 4.2.34; selenium-java 4.33.0; cucumber-junit-platform-engine 7.22.2; junit-platform-suite 1.12.2; junit-jupiter 5.12.2; assertj-core 3.27.3), Java toolchain 21, task `test` finalizada por `aggregate`
-- [ ] T002 Crear `settings.gradle` con `rootProject.name = 'Insurance_Quoter_Auto_Front_Screenplay'`
-- [ ] T003 Crear `src/test/resources/serenity.conf` con `webdriver.driver = chrome`, `serenity.base.url = "http://localhost:4200"`, `restapi.base.url = "http://localhost:8080"`, `serenity.project.name`, `serenity.reports = ["single-page-html"]`
-- [ ] T004 [P] Crear estructura de directorios vacía: `src/test/java/com/sofka/automation/hooks/`, `tasks/ui/`, `tasks/api/`, `questions/`, `targets/`, `stepdefinitions/`, `runners/`, `utils/`; `src/test/resources/features/`
+- [x] T001 Crear `build.gradle` con plugin `net.serenity-bdd.serenity-gradle-plugin:4.2.34`, dependencias fijadas por constitución (serenity-core, serenity-cucumber, serenity-screenplay, serenity-screenplay-webdriver 4.2.34; selenium-java 4.33.0; cucumber-junit-platform-engine 7.22.2; junit-platform-suite 1.12.2; junit-jupiter 5.12.2; assertj-core 3.27.3), Java toolchain 21, task `test` finalizada por `aggregate`
+- [x] T002 Crear `settings.gradle` con `rootProject.name = 'Insurance_Quoter_Auto_Front_Screenplay'`
+- [x] T003 Crear `src/test/resources/serenity.conf` con `webdriver.driver = chrome`, `serenity.base.url = "http://localhost:4200"`, `restapi.base.url = "http://localhost:8080"`, `serenity.project.name`, `serenity.reports = ["single-page-html"]`
+- [x] T004 [P] Crear estructura de directorios vacía: `src/test/java/com/sofka/automation/hooks/`, `tasks/ui/`, `tasks/api/`, `questions/`, `targets/`, `stepdefinitions/`, `runners/`, `utils/`; `src/test/resources/features/`
 
 **Checkpoint**: Proyecto compila con `./gradlew clean test` (aunque falle por falta de features).
 
@@ -28,10 +28,10 @@
 
 ⚠️ CRITICAL: No iniciar Phase 3 hasta completar esta fase.
 
-- [ ] T005 Crear `src/test/java/com/sofka/automation/utils/Constants.java` con todas las constantes del proyecto: `BASE_URL = "http://localhost:4200"`, `BACKEND_BASE_URL = "http://localhost:8080"`, `CORE_BASE_URL = "http://localhost:8081"`, `TEST_RAZON_SOCIAL = "Empresa Prueba SA de CV"`, `TEST_RFC = "EPR860101AB2"`, `TEST_EMAIL = "prueba@automation.com"`, `TEST_PHONE = "5512345678"`, `TEST_SUBSCRIBER_ID = "SUB-TEST"`, `TEST_SUBSCRIBER_NAME = "Suscriptor Automatización"`, `TEST_AGENT_CODE = "AGT-TEST"`, `TEST_AGENT_NAME = "Agente Automatización"`
-- [ ] T006 Crear `src/test/java/com/sofka/automation/hooks/CatalogSetupHook.java` con `@Before(order=1)`: GET `/v1/subscribers` vía RestAssured usando `Constants.BACKEND_BASE_URL`; si respuesta vacía → POST con datos de Constants; misma lógica para GET/POST `/v1/agents`; lanzar excepción si cualquier llamada retorna código fuera de 2xx
-- [ ] T007 Crear `src/test/resources/features/folio_creation_general_info.feature` con `# language: es`, `Característica: Creación de folio y captura de datos generales`, escenario único con 4 steps declarativos en español (Dado/Cuando/Y/Entonces) según acceptance scenarios de spec.md HU-FRONT-01
-- [ ] T008 Crear `src/test/java/com/sofka/automation/runners/FolioTestRunner.java` con `@Suite`, `@IncludeEngines("cucumber")`, `@SelectClasspathResource("features/folio_creation_general_info.feature")`, `@ConfigurationParameter` para glue path `com.sofka.automation.stepdefinitions` y plugin `io.cucumber.core.plugin.SerenityReporterParallel`
+- [x] T005 Crear `src/test/java/com/sofka/automation/utils/Constants.java` con todas las constantes del proyecto: `BASE_URL = "http://localhost:4200"`, `BACKEND_BASE_URL = "http://localhost:8080"`, `CORE_BASE_URL = "http://localhost:8081"`, `TEST_RAZON_SOCIAL = "Empresa Prueba SA de CV"`, `TEST_RFC = "EPR860101AB2"`, `TEST_EMAIL = "prueba@automation.com"`, `TEST_PHONE = "5512345678"`, `TEST_SUBSCRIBER_ID = "SUB-TEST"`, `TEST_SUBSCRIBER_NAME = "Suscriptor Automatización"`, `TEST_AGENT_CODE = "AGT-TEST"`, `TEST_AGENT_NAME = "Agente Automatización"`
+- [x] T006 Crear `src/test/java/com/sofka/automation/hooks/CatalogSetupHook.java` con `@Before(order=1)`: GET `/v1/subscribers` vía RestAssured usando `Constants.BACKEND_BASE_URL`; si respuesta vacía → POST con datos de Constants; misma lógica para GET/POST `/v1/agents`; lanzar excepción si cualquier llamada retorna código fuera de 2xx
+- [x] T007 Crear `src/test/resources/features/folio_creation_general_info.feature` con `# language: es`, `Característica: Creación de folio y captura de datos generales`, escenario único con 4 steps declarativos en español (Dado/Cuando/Y/Entonces) según acceptance scenarios de spec.md HU-FRONT-01
+- [x] T008 Crear `src/test/java/com/sofka/automation/runners/FolioTestRunner.java` con `@Suite`, `@IncludeEngines("cucumber")`, `@SelectClasspathResource("features/folio_creation_general_info.feature")`, `@ConfigurationParameter` para glue path `com.sofka.automation.stepdefinitions` y plugin `io.cucumber.core.plugin.SerenityReporterParallel`
 
 **Checkpoint**: Proyecto compila y el runner encuentra el feature file (el escenario falla por falta de step definitions — esperado).
 
@@ -45,22 +45,22 @@
 
 ### Targets (localizadores — implementar primero, en paralelo)
 
-- [ ] T009 [P] [US1] Crear `src/test/java/com/sofka/automation/targets/DashboardTargets.java` con constantes `Target`: `NEW_FOLIO_BUTTON` (botón "+ Nuevo folio"), `SUBSCRIBER_DROPDOWN` (dropdown Suscriptor en modal), `SUBSCRIBER_FIRST_OPTION` (primera opción del dropdown Suscriptor), `AGENT_DROPDOWN` (dropdown Agente en modal), `AGENT_FIRST_OPTION` (primera opción del dropdown Agente), `CREATE_FOLIO_BUTTON` (botón "Crear folio" del modal) — leer HTML del frontend en `D:\Trabajo\Sofka\Insurance-Quoter\Insurance-Quoter\Insurance-Quoter-Front\` para obtener selectores CSS/atributos reales
-- [ ] T010 [P] [US1] Crear `src/test/java/com/sofka/automation/targets/GeneralInfoTargets.java` con constantes `Target`: `RAZON_SOCIAL_INPUT`, `RFC_INPUT`, `EMAIL_INPUT`, `PHONE_INPUT`, `RISK_CLASSIFICATION_DROPDOWN`, `RISK_CLASSIFICATION_FIRST_OPTION`, `BUSINESS_TYPE_DROPDOWN`, `BUSINESS_TYPE_FIRST_OPTION`, `NEXT_BUTTON` (botón "Siguiente →"), `SECTION_COMPLETE_BADGE` (badge "• Completo"), `WIZARD_ACTIVE_STEP` (paso activo en stepper) — leer HTML del frontend para selectores reales
+- [x] T009 [P] [US1] Crear `src/test/java/com/sofka/automation/targets/DashboardTargets.java` con constantes `Target`: `NEW_FOLIO_BUTTON` (botón "+ Nuevo folio"), `SUBSCRIBER_DROPDOWN` (dropdown Suscriptor en modal), `SUBSCRIBER_FIRST_OPTION` (primera opción del dropdown Suscriptor), `AGENT_DROPDOWN` (dropdown Agente en modal), `AGENT_FIRST_OPTION` (primera opción del dropdown Agente), `CREATE_FOLIO_BUTTON` (botón "Crear folio" del modal) — leer HTML del frontend en `D:\Trabajo\Sofka\Insurance-Quoter\Insurance-Quoter\Insurance-Quoter-Front\` para obtener selectores CSS/atributos reales
+- [x] T010 [P] [US1] Crear `src/test/java/com/sofka/automation/targets/GeneralInfoTargets.java` con constantes `Target`: `RAZON_SOCIAL_INPUT`, `RFC_INPUT`, `EMAIL_INPUT`, `PHONE_INPUT`, `RISK_CLASSIFICATION_DROPDOWN`, `RISK_CLASSIFICATION_FIRST_OPTION`, `BUSINESS_TYPE_DROPDOWN`, `BUSINESS_TYPE_FIRST_OPTION`, `NEXT_BUTTON` (botón "Siguiente →"), `SECTION_COMPLETE_BADGE` (badge "• Completo"), `WIZARD_ACTIVE_STEP` (paso activo en stepper) — leer HTML del frontend para selectores reales
 
 ### Questions (en paralelo, dependen de Targets)
 
-- [ ] T011 [P] [US1] Crear `src/test/java/com/sofka/automation/questions/SectionCompletionStatus.java` implementando `Question<List<String>>`: localiza todos los elementos `GeneralInfoTargets.SECTION_COMPLETE_BADGE` visibles y retorna lista con el texto/nombre de cada sección que muestra el badge
-- [ ] T012 [P] [US1] Crear `src/test/java/com/sofka/automation/questions/WizardStepIndicator.java` implementando `Question<String>`: localiza `GeneralInfoTargets.WIZARD_ACTIVE_STEP` y retorna su texto (nombre del paso activo)
+- [x] T011 [P] [US1] Crear `src/test/java/com/sofka/automation/questions/SectionCompletionStatus.java` implementando `Question<List<String>>`: localiza todos los elementos `GeneralInfoTargets.SECTION_COMPLETE_BADGE` visibles y retorna lista con el texto/nombre de cada sección que muestra el badge
+- [x] T012 [P] [US1] Crear `src/test/java/com/sofka/automation/questions/WizardStepIndicator.java` implementando `Question<String>`: localiza `GeneralInfoTargets.WIZARD_ACTIVE_STEP` y retorna su texto (nombre del paso activo)
 
 ### Tasks UI (en paralelo, dependen de Targets)
 
-- [ ] T013 [P] [US1] Crear `src/test/java/com/sofka/automation/tasks/ui/CreateFolio.java` implementando `Performable`: navegar a `Constants.BASE_URL`; hacer clic en `DashboardTargets.NEW_FOLIO_BUTTON`; seleccionar `DashboardTargets.SUBSCRIBER_FIRST_OPTION`; seleccionar `DashboardTargets.AGENT_FIRST_OPTION`; hacer clic en `DashboardTargets.CREATE_FOLIO_BUTTON`; extraer folioNumber de la URL activa con `TheWebPage.currentUrl()` mediante regex sobre el patrón `FOL-\d{4}-\d+`; llamar `actor.remember("folioNumber", folioNumber)`
-- [ ] T014 [P] [US1] Crear `src/test/java/com/sofka/automation/tasks/ui/CompleteGeneralInfo.java` implementando `Performable`: introducir `Constants.TEST_RAZON_SOCIAL` en `GeneralInfoTargets.RAZON_SOCIAL_INPUT`; introducir `Constants.TEST_RFC` en `GeneralInfoTargets.RFC_INPUT`; introducir `Constants.TEST_EMAIL` en `GeneralInfoTargets.EMAIL_INPUT`; introducir `Constants.TEST_PHONE` en `GeneralInfoTargets.PHONE_INPUT`; seleccionar `GeneralInfoTargets.RISK_CLASSIFICATION_FIRST_OPTION`; seleccionar `GeneralInfoTargets.BUSINESS_TYPE_FIRST_OPTION`; hacer clic en `GeneralInfoTargets.NEXT_BUTTON`
+- [x] T013 [P] [US1] Crear `src/test/java/com/sofka/automation/tasks/ui/CreateFolio.java` implementando `Performable`: navegar a `Constants.BASE_URL`; hacer clic en `DashboardTargets.NEW_FOLIO_BUTTON`; seleccionar `DashboardTargets.SUBSCRIBER_FIRST_OPTION`; seleccionar `DashboardTargets.AGENT_FIRST_OPTION`; hacer clic en `DashboardTargets.CREATE_FOLIO_BUTTON`; extraer folioNumber de la URL activa con `TheWebPage.currentUrl()` mediante regex sobre el patrón `FOL-\d{4}-\d+`; llamar `actor.remember("folioNumber", folioNumber)`
+- [x] T014 [P] [US1] Crear `src/test/java/com/sofka/automation/tasks/ui/CompleteGeneralInfo.java` implementando `Performable`: introducir `Constants.TEST_RAZON_SOCIAL` en `GeneralInfoTargets.RAZON_SOCIAL_INPUT`; introducir `Constants.TEST_RFC` en `GeneralInfoTargets.RFC_INPUT`; introducir `Constants.TEST_EMAIL` en `GeneralInfoTargets.EMAIL_INPUT`; introducir `Constants.TEST_PHONE` en `GeneralInfoTargets.PHONE_INPUT`; seleccionar `GeneralInfoTargets.RISK_CLASSIFICATION_FIRST_OPTION`; seleccionar `GeneralInfoTargets.BUSINESS_TYPE_FIRST_OPTION`; hacer clic en `GeneralInfoTargets.NEXT_BUTTON`
 
 ### Step Definitions (bloqueante — depende de T009–T014)
 
-- [ ] T015 [US1] Crear `src/test/java/com/sofka/automation/stepdefinitions/FolioCreationStepDefinitions.java`: implementar los 4 steps del feature file usando `OnStage.theActorCalled("Agente")`; step "está en el panel" → `actor.attemptsTo(NavigateTo.thePageAt(Constants.BASE_URL))`; step "crea un nuevo folio" → `actor.attemptsTo(CreateFolio.fromDashboard())`; step "completa los datos" → `actor.attemptsTo(CompleteGeneralInfo.withDefaultTestData())`; step "ambas secciones muestran estado completo" → `assertThat(actor.asksAbout(SectionCompletionStatus.forBothSections())).contains("Asegurado", "Suscripción")`; step "folio avanza al paso de layout" → `assertThat(actor.asksAbout(WizardStepIndicator.currentStep())).containsIgnoringCase("Layout")`
+- [x] T015 [US1] Crear `src/test/java/com/sofka/automation/stepdefinitions/FolioCreationStepDefinitions.java`: implementar los 4 steps del feature file usando `OnStage.theActorCalled("Agente")`; step "está en el panel" → `actor.attemptsTo(NavigateTo.thePageAt(Constants.BASE_URL))`; step "crea un nuevo folio" → `actor.attemptsTo(CreateFolio.fromDashboard())`; step "completa los datos" → `actor.attemptsTo(CompleteGeneralInfo.withDefaultTestData())`; step "ambas secciones muestran estado completo" → `assertThat(actor.asksAbout(SectionCompletionStatus.forBothSections())).contains("Asegurado", "Suscripción")`; step "folio avanza al paso de layout" → `assertThat(actor.asksAbout(WizardStepIndicator.currentStep())).containsIgnoringCase("Layout")`
 
 **Checkpoint**: `./gradlew clean test aggregate` ejecuta el escenario completo sin errores. Reporte en `target/site/serenity/`.
 
@@ -68,8 +68,8 @@
 
 ## Phase N: Polish & Cross-Cutting Concerns
 
-- [ ] T016 [P] Crear `README.md` en raíz con: requisitos previos, comando de ejecución `./gradlew clean test aggregate`, ubicación del reporte, configuración del browser, estructura del proyecto
-- [ ] T017 Validar ejecución end-to-end siguiendo `specs/001-folio-creation-general-info/quickstart.md`: verificar que todos los SC-001 a SC-005 pasan, reporte Serenity generado con capturas por step
+- [x] T016 [P] Crear `README.md` en raíz con: requisitos previos, comando de ejecución `./gradlew clean test aggregate`, ubicación del reporte, configuración del browser, estructura del proyecto
+- [x] T017 Validar ejecución end-to-end siguiendo `specs/001-folio-creation-general-info/quickstart.md`: verificar que todos los SC-001 a SC-005 pasan, reporte Serenity generado con capturas por step
 
 ---
 
