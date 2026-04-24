@@ -102,11 +102,34 @@ V. Separation of Concerns
 - Questions (questions/): extracción de un dato observable de la UI.
 - Targets (targets/): constantes Target agrupadas por página.
 
-VI. Code Clarity
-- Código en inglés. Gherkin y documentación en español.
-- Nombres semánticos y autoexplicativos. Sin código comentado.
+VI. Language Convention
+- Todo el código (clases, métodos, variables, constantes) DEBE estar en inglés.
+- Gherkin, specs, documentación y comentarios DEBEN estar en español.
+- Sin excepciones.
 
-VII. Pinned Dependencies
+VII. No Hardcoding
+- Ningún valor literal (URLs, credenciales, datos de prueba, timeouts,
+  códigos de catálogo) puede estar inline en Tasks, Questions ni StepDefinitions.
+- Todos los valores constantes DEBEN declararse en la clase utilitaria
+  `Constants` (src/test/java/com/sofka/automation/utils/Constants.java).
+- Ejemplo: Constants.BASE_URL, Constants.TEST_ZIP_CODE, Constants.FIRE_GUARANTEE_AMOUNT.
+
+VIII. GitFlow
+- Rama principal de integración: develop.
+- Toda nueva feature parte de develop con rama feature/<nombre-descriptivo>.
+- Merge a develop solo vía Pull Request.
+- main recibe únicamente merges desde release/* o hotfix/*.
+- Prohibido push directo a main o develop.
+- Commits en Conventional Commits: feat:, fix:, chore:, docs:, refactor:.
+
+IX. No Self-Testing
+- Este repositorio NO contiene pruebas unitarias sobre el código de
+  automatización (Tasks, Questions, Targets, Hooks).
+- La validación del código de automatización ocurre ejecutando los
+  escenarios Cucumber contra el sistema real.
+- No se crean clases de test para verificar Tasks ni Questions.
+
+X. Pinned Dependencies
 
 | Componente                           | Versión |
 |--------------------------------------|---------|
@@ -122,7 +145,7 @@ VII. Pinned Dependencies
 | junit-jupiter                        | 5.12.2  |
 | assertj-core                         | 3.27.3  |
 
-VIII. No Overengineering
+XI. No Overengineering
 - Arquitectura mínima para los 3 flujos requeridos.
 - Sin helpers ni utilidades genéricas para operaciones de un solo uso.
 - Sin escenarios de error adicionales fuera del alcance de cada spec.
@@ -419,6 +442,8 @@ Estructura de paquetes bajo src/test/java/com/sofka/automation/:
   stepdefinitions/
   runners/
   hooks/          — CatalogSetupHook (@Before order=1, verifica/crea catálogos)
+  utils/          — Constants.java (todos los valores literales del proyecto:
+                    URLs, datos de prueba, códigos de catálogo, timeouts)
 
 Decisiones bloqueadas (no reabrir):
 - Screenplay; sin Page Object Model.
@@ -443,6 +468,10 @@ Restricciones:
 - Versiones de dependencias fijadas por constitución; no cambiar.
 - Sin Thread.sleep; usar esperas implícitas de Serenity WebDriver.
 - Sin helpers genéricos para operaciones de un solo uso.
+- Sin valores literales inline; todos en Constants.java.
+- Sin pruebas unitarias sobre el código de automatización.
+- GitFlow: features parten de develop, merge solo vía PR.
+- Commits en Conventional Commits.
 ```
 
 ---
