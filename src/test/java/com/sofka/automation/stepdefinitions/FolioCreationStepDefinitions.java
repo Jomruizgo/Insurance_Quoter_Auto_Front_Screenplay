@@ -13,8 +13,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actors.Cast;
 import net.serenitybdd.screenplay.actors.OnStage;
+import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.waits.WaitUntil;
@@ -27,7 +27,7 @@ public class FolioCreationStepDefinitions {
 
     @Before(order = 10)
     public void setTheStage() {
-        OnStage.setTheStage(Cast.whereEveryoneCanBrowseTheWeb());
+        OnStage.setTheStage(new OnlineCast());
     }
 
     @After

@@ -6,7 +6,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.thucydides.core.annotations.Step;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ public class SetupLocationScenario implements Task {
     }
 
     @Override
-    @Step("{0} sets up a folio with one complete and one incomplete location via API")
     public <T extends Actor> void performAs(T actor) {
         String baseUrl = RestAssured.baseURI.isBlank()
             ? Constants.BACKEND_BASE_URL
