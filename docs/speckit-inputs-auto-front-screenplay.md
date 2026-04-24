@@ -98,3 +98,14 @@ atómico). Tasks API: RestAssured directo para setup de precondiciones.
 Targets por página. Sin Thread.sleep; esperas implícitas de Serenity.
 Un runner por feature. Plugin Serenity: SerenityReporterParallel.
 ```
+
+---
+
+## `speckit implement`
+
+```
+El código fuente del frontend a automatizar está en:
+D:\Trabajo\Sofka\Insurance-Quoter\Insurance-Quoter\Insurance-Quoter-Front\
+Leer los componentes Angular para extraer los selectores CSS correctos
+antes de escribir las clases Target.
+```
