@@ -12,21 +12,22 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.Open;
-import net.serenitybdd.screenplay.cast.Cast;
+import net.serenitybdd.screenplay.actors.OnStage;
+import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
-import net.serenitybdd.screenplay.stage.OnStage;
+import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.hasItems;
 
 public class FolioCreationStepDefinitions {
 
     @Before(order = 10)
     public void setTheStage() {
-        OnStage.setTheStage(Cast.whereEveryoneCanBrowseTheWeb());
+        OnStage.setTheStage(new OnlineCast());
     }
 
     @After
@@ -57,19 +58,23 @@ public class FolioCreationStepDefinitions {
 
     @Then("ambas secciones muestran estado completo y el folio avanza al paso de layout")
     public void verificarEstadoCompleto() {
-        Actor actor = OnStage.theActorInTheSpotlight();
+        OnStage.theActorInTheSpotlight().should(
+                seeThat(SectionCompletionStatus.forBothSections(),
+                        hasItems("Asegurado", "Suscripción"))
+                        .orComplainWith(AssertionError.class,
+                                "Las secciones Asegurado y Suscripción deben mostrar badge Completo")
+        );
 
-        assertThat(actor.asksAbout(SectionCompletionStatus.forBothSections()))
-                .as("Las secciones Asegurado y Suscripción deben mostrar badge Completo")
-                .contains("Asegurado", "Suscripción");
-
-        actor.attemptsTo(
+        OnStage.theActorInTheSpotlight().attemptsTo(
                 Click.on(GeneralInfoTargets.NEXT_BUTTON),
                 WaitUntil.the(GeneralInfoTargets.WIZARD_ACTIVE_STEP, WebElementStateMatchers.isVisible())
         );
 
-        assertThat(actor.asksAbout(WizardStepIndicator.currentStep()))
-                .as("El wizard debe estar en el paso Layout")
-                .containsIgnoringCase("Layout");
+        OnStage.theActorInTheSpotlight().should(
+                seeThat(WizardStepIndicator.currentStep(),
+                        containsStringIgnoringCase("Layout"))
+                        .orComplainWith(AssertionError.class,
+                                "El wizard debe estar en el paso Layout")
+        );
     }
 }

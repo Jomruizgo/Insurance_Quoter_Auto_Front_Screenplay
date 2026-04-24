@@ -1,10 +1,12 @@
-# Insurance_Quoter_Auto_Front_Screenplay Development Guidelines
+﻿# Insurance_Quoter_Auto_Front_Screenplay Development Guidelines
 
 Auto-generated from feature plans. Last updated: 2026-04-24
 
 ## Active Technologies
+- Java 21 + Serenity BDD 4.2.34, serenity-screenplay-webdriver 4.2.34, (003-coverage-premium-calc)
 
 - Java 21 + Serenity BDD 4.2.34 + serenity-screenplay-webdriver 4.2.34 + Selenium 4.33.0 (001-folio-creation-general-info)
+- RestAssured 5.3.2 para setup API de precondiciones (002-location-registration)
 
 ## Project Structure
 
@@ -41,8 +43,10 @@ Reporte en `target/site/serenity/index.html`.
 - GitFlow: features desde develop, merge vía PR, Conventional Commits
 
 ## Recent Changes
+- 003-coverage-premium-calc: Added Java 21 + Serenity BDD 4.2.34, serenity-screenplay-webdriver 4.2.34,
 
 - 001-folio-creation-general-info: setup inicial Java 21 + Serenity BDD Screenplay WebDriver
+- 002-location-registration: LocationsTargets (badge + banner), SetupLocationScenario (Task API), LocationBadgeStatus + BlockingAlertsBanner (Questions), LocationScenarioSetupHook @Before(order=2)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
