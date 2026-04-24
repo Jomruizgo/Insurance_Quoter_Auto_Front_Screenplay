@@ -61,7 +61,7 @@ El agente puede confirmar que una ubicación registrada con todos sus datos obli
 - **Folio**: Identificador único de cotización. Creado vía API en precondición. Tiene número de folio (ej. `FOL-2026-00001`).
 - **Layout**: Estructura del folio que define el número y nombre de ubicaciones. Definido vía API en precondición.
 - **Ubicación**: Unidad geográfica dentro del layout. Tiene: nombre, código postal, giro de negocio (con o sin clave incendio) y garantías tarifables.
-- **Badge de estado**: Indicador visual por ubicación que refleja su completitud ("Incompleta" vs. estado completo).
+- **Badge de estado**: Indicador visual por ubicación. Texto exacto: `"Incompleta"` para estado incompleto, `"Completa"` para estado completo.
 - **Alerta bloqueante**: Mensaje de validación que indica que la ubicación no puede ser tarifada sin corrección, pero no bloquea la navegación del folio.
 
 ## Success Criteria *(mandatory)*
@@ -90,5 +90,5 @@ El agente puede confirmar que una ubicación registrada con todos sus datos obli
 ### Session 2026-04-24
 
 - Q: ¿El setup de ubicaciones (CP, giro, garantías) se realiza vía API o vía UI? → A: Exclusivamente vía API antes de abrir el browser, igual que POST folio y PUT layout.
-- Q: ¿El badge de la ubicación incompleta dice exactamente "Incompleta" o puede ser otro texto? → A: El texto exacto se confirmará al leer el HTML del frontend; el criterio es que el badge difiere del estado completo.
+- Q: ¿El badge de la ubicación incompleta dice exactamente "Incompleta" o puede ser otro texto? → A: El texto es exactamente `"Incompleta"` — confirmado por `validationLabel()` en `locations-table.component.ts`. Badge completo = `"Completa"`, badge incompleto = `"Incompleta"`, con clases CSS `badge--complete` y `badge--incomplete` respectivamente.
 - Q: ¿Las alertas bloqueantes aparecen automáticamente al abrir la ubicación o requieren acción del usuario? → A: Aparecen automáticamente al visualizar la ubicación incompleta, sin acción adicional del agente.
