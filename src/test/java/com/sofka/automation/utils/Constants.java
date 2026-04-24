@@ -24,6 +24,10 @@ public final class Constants {
     public static final String TEST_LOCATION_GUARANTEE_CODE  = "INCENDIO";
     public static final int    TEST_LOCATION_INSURED_VALUE   = 1_000_000;
     public static final String LOCATIONS_URL_TEMPLATE        = "/cotizador/quotes/%s/locations";
+    public static final String TECHNICAL_INFO_URL_TEMPLATE   = "/cotizador/quotes/%s/technical-info";
+    public static final String CALCULATION_URL_TEMPLATE      = "/cotizador/quotes/%s/calculation";
+
+    public static final String COVERAGE_CODE_FIRE = "COV-FIRE";
 
     private Constants() {}
 }
