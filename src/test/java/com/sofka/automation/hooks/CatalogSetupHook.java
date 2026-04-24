@@ -3,7 +3,6 @@ package com.sofka.automation.hooks;
 import com.sofka.automation.utils.Constants;
 import io.cucumber.java.Before;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import java.util.List;
@@ -12,60 +11,43 @@ public class CatalogSetupHook {
 
     @Before(order = 1)
     public void ensureCatalogsExist() {
-        ensureSubscriberExists();
-        ensureAgentExists();
+        verifySubscriberExists();
+        verifyAgentExists();
     }
 
-    private void ensureSubscriberExists() {
-        Response getResponse = RestAssured
-                .given().baseUri(Constants.BACKEND_BASE_URL)
+    private void verifySubscriberExists() {
+        Response response = RestAssured
+                .given().baseUri(Constants.CORE_BASE_URL)
                 .get("/v1/subscribers");
 
-        assertSuccessful(getResponse, "GET /v1/subscribers");
+        if (response.getStatusCode() < 200 || response.getStatusCode() >= 300) {
+            throw new IllegalStateException(
+                    "CatalogSetupHook: GET /v1/subscribers retornó " + response.getStatusCode());
+        }
 
-        List<?> subscribers = getResponse.jsonPath().getList("$");
-        if (subscribers.isEmpty()) {
-            Response postResponse = RestAssured
-                    .given().baseUri(Constants.BACKEND_BASE_URL)
-                    .contentType(ContentType.JSON)
-                    .body(String.format(
-                            "{\"id\":\"%s\",\"name\":\"%s\"}",
-                            Constants.TEST_SUBSCRIBER_ID,
-                            Constants.TEST_SUBSCRIBER_NAME))
-                    .post("/v1/subscribers");
-
-            assertSuccessful(postResponse, "POST /v1/subscribers");
+        List<String> ids = response.jsonPath().getList("subscribers.id", String.class);
+        if (ids == null || !ids.contains(Constants.TEST_SUBSCRIBER_ID)) {
+            throw new IllegalStateException(
+                    "CatalogSetupHook: suscriptor '" + Constants.TEST_SUBSCRIBER_ID
+                    + "' no encontrado en el catálogo. IDs disponibles: " + ids);
         }
     }
 
-    private void ensureAgentExists() {
-        Response getResponse = RestAssured
-                .given().baseUri(Constants.BACKEND_BASE_URL)
+    private void verifyAgentExists() {
+        Response response = RestAssured
+                .given().baseUri(Constants.CORE_BASE_URL)
                 .get("/v1/agents");
 
-        assertSuccessful(getResponse, "GET /v1/agents");
-
-        List<?> agents = getResponse.jsonPath().getList("$");
-        if (agents.isEmpty()) {
-            Response postResponse = RestAssured
-                    .given().baseUri(Constants.BACKEND_BASE_URL)
-                    .contentType(ContentType.JSON)
-                    .body(String.format(
-                            "{\"code\":\"%s\",\"name\":\"%s\"}",
-                            Constants.TEST_AGENT_CODE,
-                            Constants.TEST_AGENT_NAME))
-                    .post("/v1/agents");
-
-            assertSuccessful(postResponse, "POST /v1/agents");
-        }
-    }
-
-    private void assertSuccessful(Response response, String operation) {
-        int status = response.getStatusCode();
-        if (status < 200 || status >= 300) {
+        if (response.getStatusCode() < 200 || response.getStatusCode() >= 300) {
             throw new IllegalStateException(
-                    "CatalogSetupHook: " + operation + " retornó " + status +
-                    " — verificar que el backend está corriendo en " + Constants.BACKEND_BASE_URL);
+                    "CatalogSetupHook: GET /v1/agents retornó " + response.getStatusCode());
+        }
+
+        List<String> codes = response.jsonPath().getList("agents.code", String.class);
+        if (codes == null || !codes.contains(Constants.TEST_AGENT_CODE)) {
+            throw new IllegalStateException(
+                    "CatalogSetupHook: agente '" + Constants.TEST_AGENT_CODE
+                    + "' no encontrado en el catálogo. Códigos disponibles: " + codes);
         }
     }
 }

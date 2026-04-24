@@ -29,6 +29,10 @@ dependencies {
     testImplementation 'io.rest-assured:rest-assured:5.3.2'
 }
 
+serenity {
+    outputDirectory = 'build/serenity-output'
+}
+
 test {
     useJUnitPlatform()
     finalizedBy aggregate
