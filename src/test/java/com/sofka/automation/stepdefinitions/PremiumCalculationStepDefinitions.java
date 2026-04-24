@@ -49,10 +49,10 @@ public class PremiumCalculationStepDefinitions {
         );
     }
 
-    @Cuando("el agente activa la cobertura de incendio en la ubicación completa y guarda")
-    public void agentActivatesFireCoverageAndSaves() {
+    @Cuando("el agente activa la cobertura de interrupción de negocio en la ubicación completa y guarda")
+    public void agentActivatesCoverageAndSaves() {
         OnStage.theActorCalled("agent").attemptsTo(
-            ActivateCoverageForLocation.withCode(Constants.COVERAGE_CODE_FIRE),
+            ActivateCoverageForLocation.withCode(Constants.COVERAGE_CODE_BI),
             SaveCoverages.now()
         );
     }

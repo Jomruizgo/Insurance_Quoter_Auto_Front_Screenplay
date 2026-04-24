@@ -19,7 +19,7 @@ public final class CoveragesTargets {
         return Target.the("toggle for coverage " + code)
             .locatedBy("//div[contains(@class,'coverage-card')]"
                 + "[.//code[contains(@class,'coverage-card__code') and normalize-space()='" + code + "']]"
-                + "//app-switch");
+                + "//app-switch//button");
     }
 
     private CoveragesTargets() {}

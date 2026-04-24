@@ -24,15 +24,15 @@ public class ActivateCoverageForLocation implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         Target toggle = CoveragesTargets.coverageToggleByCode(coverageCode);
+        Target badgeActiva = Target.the("badge activa for " + coverageCode)
+            .locatedBy("//div[contains(@class,'coverage-card')]"
+                + "[.//code[contains(@class,'coverage-card__code') and normalize-space()='" + coverageCode + "']]"
+                + "//app-badge[contains(normalize-space(.),'Activa')]");
+
         actor.attemptsTo(
+            WaitUntil.the(toggle, WebElementStateMatchers.isVisible()),
             Click.on(toggle),
-            WaitUntil.the(
-                Target.the("badge activa for " + coverageCode)
-                    .locatedBy("//div[contains(@class,'coverage-card')]"
-                        + "[.//code[contains(@class,'coverage-card__code') and normalize-space()='" + coverageCode + "']]"
-                        + "//*[contains(@class,'badge') and normalize-space(.)='Activa']"),
-                WebElementStateMatchers.isVisible()
-            )
+            WaitUntil.the(badgeActiva, WebElementStateMatchers.isVisible())
         );
     }
 }

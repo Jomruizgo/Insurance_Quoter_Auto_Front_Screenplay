@@ -86,7 +86,7 @@
 
 **Propósito**: Verificación end-to-end y limpieza.
 
-- [ ] T020 Ejecutar `./gradlew test -Dcucumber.filter.tags="@premium-calculation or @premium-calculation-single" aggregate` y confirmar que los 4 escenarios pasan con BUILD SUCCESSFUL; si alguno falla, corregir antes de cerrar el feature
+- [x] T020 Ejecutar `./gradlew test -Dcucumber.filter.tags="@premium-calculation or @premium-calculation-single" aggregate` y confirmar que los 4 escenarios pasan con BUILD SUCCESSFUL; si alguno falla, corregir antes de cerrar el feature
 
 ---
 

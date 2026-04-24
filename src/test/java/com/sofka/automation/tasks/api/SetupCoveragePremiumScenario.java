@@ -100,11 +100,11 @@ public class SetupCoveragePremiumScenario implements Task {
             "level", 1,
             "constructionYear", 2010,
             "businessLine", Map.of(
-                "code", Constants.TEST_LOCATION_BL_CODE,
-                "fireKey", Constants.TEST_LOCATION_BL_FIRE_KEY
+                "code", Constants.COVERAGE_TEST_BL_CODE,
+                "fireKey", Constants.COVERAGE_TEST_BL_FIRE_KEY
             ),
             "guarantees", List.of(Map.of(
-                "code", Constants.TEST_LOCATION_GUARANTEE_CODE,
+                "code", Constants.COVERAGE_TEST_GUARANTEE_CODE,
                 "insuredValue", Constants.TEST_LOCATION_INSURED_VALUE
             ))
         );

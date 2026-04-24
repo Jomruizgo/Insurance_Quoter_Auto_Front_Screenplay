@@ -27,7 +27,12 @@ public final class Constants {
     public static final String TECHNICAL_INFO_URL_TEMPLATE   = "/cotizador/quotes/%s/technical-info";
     public static final String CALCULATION_URL_TEMPLATE      = "/cotizador/quotes/%s/calculation";
 
-    public static final String COVERAGE_CODE_FIRE = "COV-FIRE";
+    // 003-coverage-premium-calc: datos de ubicación que producen prima calculable
+    public static final String COVERAGE_TEST_BL_CODE         = "BL-002";
+    public static final String COVERAGE_TEST_BL_FIRE_KEY     = "FK-INC-02";
+    public static final String COVERAGE_TEST_GUARANTEE_CODE  = "GUA-FIRE";
+    // COV-BI: cobertura no seleccionada por defecto, usada para verificar el flujo de activación
+    public static final String COVERAGE_CODE_BI              = "COV-BI";
 
     private Constants() {}
 }
