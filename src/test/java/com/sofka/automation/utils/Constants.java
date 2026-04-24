@@ -16,5 +16,12 @@ public final class Constants {
     public static final String TEST_AGENT_CODE      = "AGT-TEST";
     public static final String TEST_AGENT_NAME      = "Agente Automatización";
 
+    public static final String TEST_LOCATION_ZIP_CODE        = "06600";
+    public static final String TEST_LOCATION_BL_CODE         = "OFICINAS";
+    public static final String TEST_LOCATION_BL_FIRE_KEY     = "1110";
+    public static final String TEST_LOCATION_GUARANTEE_CODE  = "INCENDIO";
+    public static final int    TEST_LOCATION_INSURED_VALUE   = 1_000_000;
+    public static final String LOCATIONS_URL_TEMPLATE        = "/cotizador/quotes/%s/locations";
+
     private Constants() {}
 }
