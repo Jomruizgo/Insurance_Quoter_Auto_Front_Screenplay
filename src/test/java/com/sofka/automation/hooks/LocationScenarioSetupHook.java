@@ -6,7 +6,7 @@ import net.serenitybdd.screenplay.actors.OnStage;
 
 public class LocationScenarioSetupHook {
 
-    @Before(order = 2, value = "@location-registration")
+    @Before(order = 20, value = "@location-registration")
     public void setupLocationScenario() {
         OnStage.theActorCalled("agent")
             .attemptsTo(SetupLocationScenario.forCurrentActor());

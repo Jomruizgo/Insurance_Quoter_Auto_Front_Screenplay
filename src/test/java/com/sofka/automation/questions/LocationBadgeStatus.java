@@ -31,7 +31,7 @@ public class LocationBadgeStatus implements Question<String> {
             if (elements.isEmpty()) {
                 return "";
             }
-            return elements.get(0).getText().trim();
+            return elements.get(0).getText().trim().replaceAll("\\s*\\(\\d+\\)$", "");
         } catch (Exception e) {
             return "";
         }

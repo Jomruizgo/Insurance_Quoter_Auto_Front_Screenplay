@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +19,19 @@ public class SetupLocationScenario implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        String baseUrl = RestAssured.baseURI.isBlank()
-            ? Constants.BACKEND_BASE_URL
-            : RestAssured.baseURI;
+        Response folioResponse = createFolio();
+        String folioNumber = folioResponse.jsonPath().getString("folioNumber");
+        long version = folioResponse.jsonPath().getLong("version");
 
-        // 1. POST /v1/folios
-        Response createFolioResponse = RestAssured
+        Response generalInfoResponse = updateGeneralInfo(folioNumber, version);
+        version = generalInfoResponse.jsonPath().getLong("version");
+
+        setLocations(folioNumber, version);
+        actor.remember("folioNumber", folioNumber);
+    }
+
+    private Response createFolio() {
+        Response response = RestAssured
             .given()
                 .baseUri(Constants.BACKEND_BASE_URL)
                 .contentType(ContentType.JSON)
@@ -36,42 +44,43 @@ public class SetupLocationScenario implements Task {
             .then()
                 .extract().response();
 
-        if (createFolioResponse.statusCode() < 200 || createFolioResponse.statusCode() >= 300) {
-            throw new IllegalStateException(
-                "Failed to create folio. Status: " + createFolioResponse.statusCode()
-                + " Body: " + createFolioResponse.body().asString());
-        }
+        assertSuccess(response, "POST /v1/folios");
+        return response;
+    }
 
-        long folioId = createFolioResponse.jsonPath().getLong("id");
-        String folioNumber = createFolioResponse.jsonPath().getString("folioNumber");
+    private Response updateGeneralInfo(String folioNumber, long version) {
+        Map<String, Object> insuredData = Map.of(
+            "name", Constants.TEST_RAZON_SOCIAL,
+            "rfc", Constants.TEST_RFC,
+            "email", Constants.TEST_EMAIL,
+            "phone", Constants.TEST_PHONE
+        );
+        Map<String, Object> underwritingData = Map.of(
+            "subscriberId", Constants.TEST_SUBSCRIBER_ID,
+            "agentCode", Constants.TEST_AGENT_CODE,
+            "riskClassification", Constants.TEST_RISK_CLASSIFICATION,
+            "businessType", Constants.TEST_BUSINESS_TYPE
+        );
 
-        // 2. PUT /v1/folios/{id}/general-info
-        Response generalInfoResponse = RestAssured
+        Response response = RestAssured
             .given()
                 .baseUri(Constants.BACKEND_BASE_URL)
                 .contentType(ContentType.JSON)
                 .body(Map.of(
-                    "razonSocial", Constants.TEST_RAZON_SOCIAL,
-                    "rfc", Constants.TEST_RFC,
-                    "email", Constants.TEST_EMAIL,
-                    "phone", Constants.TEST_PHONE,
-                    "riskClassification", "BAJO",
-                    "businessType", "COMERCIAL",
-                    "version", 0
+                    "insuredData", insuredData,
+                    "underwritingData", underwritingData,
+                    "version", version
                 ))
             .when()
-                .put("/v1/folios/" + folioId + "/general-info")
+                .put("/v1/quotes/" + folioNumber + "/general-info")
             .then()
                 .extract().response();
 
-        if (generalInfoResponse.statusCode() < 200 || generalInfoResponse.statusCode() >= 300) {
-            throw new IllegalStateException(
-                "Failed to set general info for folio " + folioId
-                + ". Status: " + generalInfoResponse.statusCode()
-                + " Body: " + generalInfoResponse.body().asString());
-        }
+        assertSuccess(response, "PUT /v1/quotes/" + folioNumber + "/general-info");
+        return response;
+    }
 
-        // 3. PUT /v1/quotes/{folioNumber}/locations — 2 ubicaciones
+    private void setLocations(String folioNumber, long version) {
         Map<String, Object> completeLocation = Map.of(
             "index", 1,
             "locationName", "Ubicación 1",
@@ -90,38 +99,38 @@ public class SetupLocationScenario implements Task {
             ))
         );
 
-        Map<String, Object> incompleteLocation = Map.of(
-            "index", 2,
-            "locationName", "Ubicación 2",
-            "address", "",
-            "zipCode", "",
-            "constructionType", "MASONRY",
-            "level", 1,
-            "constructionYear", 2000,
-            "guarantees", List.of()
-        );
+        Map<String, Object> incompleteLocation = new HashMap<>();
+        incompleteLocation.put("index", 2);
+        incompleteLocation.put("locationName", "Ubicación 2");
+        incompleteLocation.put("address", "");
+        incompleteLocation.put("zipCode", "");
+        incompleteLocation.put("constructionType", "MASONRY");
+        incompleteLocation.put("level", 1);
+        incompleteLocation.put("constructionYear", 2000);
+        incompleteLocation.put("businessLine", null);
+        incompleteLocation.put("guarantees", List.of());
 
-        Response locationsResponse = RestAssured
+        Response response = RestAssured
             .given()
                 .baseUri(Constants.BACKEND_BASE_URL)
                 .contentType(ContentType.JSON)
                 .body(Map.of(
                     "locations", List.of(completeLocation, incompleteLocation),
-                    "version", 0
+                    "version", version
                 ))
             .when()
                 .put("/v1/quotes/" + folioNumber + "/locations")
             .then()
                 .extract().response();
 
-        if (locationsResponse.statusCode() < 200 || locationsResponse.statusCode() >= 300) {
-            throw new IllegalStateException(
-                "Failed to set locations for folio " + folioNumber
-                + ". Status: " + locationsResponse.statusCode()
-                + " Body: " + locationsResponse.body().asString());
-        }
+        assertSuccess(response, "PUT /v1/quotes/" + folioNumber + "/locations");
+    }
 
-        actor.remember("folioNumber", folioNumber);
-        actor.remember("folioId", String.valueOf(folioId));
+    private void assertSuccess(Response response, String operation) {
+        int status = response.getStatusCode();
+        if (status < 200 || status >= 300) {
+            throw new IllegalStateException(
+                operation + " returned " + status + ": " + response.body().asString());
+        }
     }
 }

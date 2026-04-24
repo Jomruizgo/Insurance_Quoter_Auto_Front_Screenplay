@@ -11,27 +11,27 @@ public class GeneralInfoTargets {
 
     public static final Target RAZON_SOCIAL_INPUT = Target
             .the("campo Razón social")
-            .located(By.xpath("//div[contains(@class,'field')][.//label[contains(.,'Razón social')]]//input[@class='input']"));
+            .located(By.cssSelector("app-input[formcontrolname='name'] input.input"));
 
     public static final Target RFC_INPUT = Target
             .the("campo RFC")
-            .located(By.xpath("//div[contains(@class,'field')][.//label[contains(.,'RFC')]]//input[@class='input']"));
+            .located(By.cssSelector("app-input[formcontrolname='rfc'] input.input"));
 
     public static final Target EMAIL_INPUT = Target
             .the("campo Correo de contacto")
-            .located(By.xpath("//div[contains(@class,'field')][.//label[contains(.,'Correo de contacto')]]//input[@class='input']"));
+            .located(By.cssSelector("app-input[formcontrolname='email'] input.input"));
 
     public static final Target PHONE_INPUT = Target
             .the("campo Teléfono")
-            .located(By.xpath("//div[contains(@class,'field')][.//label[contains(.,'Teléfono')]]//input[@class='input']"));
+            .located(By.cssSelector("app-input[formcontrolname='phone'] input.input"));
 
     public static final Target RISK_CLASSIFICATION_DROPDOWN = Target
             .the("dropdown Clasificación de riesgo")
-            .located(By.xpath("//div[contains(@class,'field')][.//label[contains(.,'Clasificación de riesgo')]]//select[@class='select']"));
+            .located(By.cssSelector("app-select[formcontrolname='riskClassification'] select.select"));
 
     public static final Target BUSINESS_TYPE_DROPDOWN = Target
             .the("dropdown Tipo de negocio")
-            .located(By.xpath("//div[contains(@class,'field')][.//label[contains(.,'Tipo de negocio')]]//select[@class='select']"));
+            .located(By.cssSelector("app-select[formcontrolname='businessType'] select.select"));
 
     public static final Target NEXT_BUTTON = Target
             .the("botón Siguiente")

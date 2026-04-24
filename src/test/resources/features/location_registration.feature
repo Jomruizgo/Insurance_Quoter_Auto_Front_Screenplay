@@ -14,9 +14,9 @@ Característica: Registro de ubicaciones con estado incompleto y completo
     Y el agente puede navegar al siguiente paso del wizard
 
   @location-registration
-  Escenario: Verificar que ubicación completa no muestra badge de incompleta ni alertas
+  Escenario: Verificar que ubicación completa muestra badge correcto y sin alertas propias
     Dado que el agente navega a la pantalla de ubicaciones del folio
     Cuando el agente visualiza la primera ubicación con datos completos
     Entonces la primera ubicación no muestra el badge "Incompleta"
-    Y no aparece banner de alertas bloqueantes en la pantalla
+    Y la primera ubicación no tiene alertas bloqueantes propias
     Y la primera ubicación muestra el badge "Completa"

@@ -9,8 +9,11 @@ public final class LocationsTargets {
         return Target.the("badge for location " + index)
             .locatedBy("//table[contains(@class,'locations-table')]"
                 + "//tbody/tr[td[2][normalize-space(text())='" + index + "']]"
-                + "//span[contains(@class,'badge')]");
+                + "/td[last()]//span");
     }
+
+    public static final Target LOCATIONS_TABLE = Target.the("tabla de ubicaciones")
+        .located(By.cssSelector("table.locations-table"));
 
     public static final Target BLOCKING_ALERTS_BANNER = Target.the("blocking alerts banner")
         .located(By.cssSelector("div.alert-banner.alert-banner--warn"));

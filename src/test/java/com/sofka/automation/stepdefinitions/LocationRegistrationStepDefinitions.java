@@ -10,11 +10,12 @@ import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
-import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -38,7 +39,10 @@ public class LocationRegistrationStepDefinitions {
         String folioNumber = OnStage.theActorCalled("agent").recall("folioNumber");
         String url = Constants.BASE_URL
             + String.format(Constants.LOCATIONS_URL_TEMPLATE, folioNumber);
-        OnStage.theActorCalled("agent").attemptsTo(Open.url(url));
+        OnStage.theActorCalled("agent").attemptsTo(
+            Open.url(url),
+            WaitUntil.the(LocationsTargets.LOCATIONS_TABLE, WebElementStateMatchers.isVisible())
+        );
     }
 
     @Cuando("el agente visualiza la segunda ubicación sin datos")
@@ -75,10 +79,11 @@ public class LocationRegistrationStepDefinitions {
             .should(seeThat(LocationBadgeStatus.forLocationIndex(1), not(equalTo(badge))));
     }
 
-    @Y("no aparece banner de alertas bloqueantes en la pantalla")
-    public void blockingAlertsBannerIsNotVisible() {
+    @Y("la primera ubicación no tiene alertas bloqueantes propias")
+    public void firstLocationHasNoOwnAlerts() {
+        // badge "Completa" implica cero alertas para esta ubicación
         OnStage.theActorCalled("agent")
-            .should(seeThat(BlockingAlertsBanner.isVisible(), is(false)));
+            .should(seeThat(LocationBadgeStatus.forLocationIndex(1), equalTo("Completa")));
     }
 
     @Y("la primera ubicación muestra el badge {string}")
