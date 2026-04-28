@@ -104,7 +104,8 @@ Un runner por feature. Plugin Serenity: SerenityReporterParallel.
 ## `speckit implement`
 
 ```
-El código fuente del frontend a automatizar está en:
+Recuerda cerrar cada issue a medida que la vayas termianndo, no esperes hasta el final para
+hacerlas todas juntas, implementa en paralelo todas las que puedas. El código fuente del frontend a automatizar está en:
 D:\Trabajo\Sofka\Insurance-Quoter\Insurance-Quoter\Insurance-Quoter-Front\
 Leer los componentes Angular para extraer los selectores CSS correctos
 antes de escribir las clases Target.
