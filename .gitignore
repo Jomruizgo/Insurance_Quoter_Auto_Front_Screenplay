@@ -36,3 +36,9 @@ drivers/
 # Environment / secrets
 .env
 *.env.local
+
+# Claude Code tooling
+.claude/
+
+# Specify tooling
+.specify/
