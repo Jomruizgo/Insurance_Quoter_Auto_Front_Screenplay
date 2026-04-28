@@ -2,6 +2,7 @@
 .gradle/
 build/
 out/
+bin/
 
 # Serenity reports
 target/
